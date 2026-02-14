@@ -55,3 +55,38 @@ When trying to run the code, I got a **database configuration error** because I 
 
 **Author:** Vijayakrishna Tela  
 **Status:** Final Year Student | Learning Spring Boot | Seeking Entry-Level Opportunities
+
+
+### Day 2: Project Structure & Entity ✅
+
+**What I Built:**
+- ✅ Created package structure (controller, service, repository, entity)
+- ✅ Created Employee entity class with id, name, email, department
+- ✅ Created EmployeeController with REST endpoints
+- ✅ Returned dummy employee data (no database yet)
+
+**Key Learnings:**
+
+1. **Entity Class:**
+   - Represents a database table (will create actual table on Day 3)
+   - Private fields with getters/setters for encapsulation
+   - Need default constructor for Spring Boot/JPA
+
+2. **Return Types:**
+   - `List<Employee>` returns list of employee objects
+   - Spring Boot automatically converts objects to JSON
+   - No manual JSON writing needed!
+
+3. **REST API Structure:**
+   - `@RequestMapping("/api/employees")` at class level = base path
+   - `@GetMapping("/all")` = endpoint path
+   - Final URL: `/api/employees/all`
+
+**API Endpoints:**
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET    | `/hello` | Returns welcome message |
+| GET    | `/api/employees/single` | Returns single employee |
+| GET    | `/api/employees/all` | Returns list of employees |
+
+**Day 2 Status:** ✅ Complete
