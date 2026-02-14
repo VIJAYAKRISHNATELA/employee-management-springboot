@@ -89,4 +89,41 @@ When trying to run the code, I got a **database configuration error** because I 
 | GET    | `/api/employees/single` | Returns single employee |
 | GET    | `/api/employees/all` | Returns list of employees |
 
+
+1. Spring Boot Architecture ✅
+
+Created proper package structure (entity, controller, service, repository)
+Understanding the layers of the application
+
+2. Entity Class ✅
+
+Marks a database table (will create actual table on Day 3)
+Properties = columns in the table
+Private fields = Encapsulation = Security ✅
+
+3. Constructors ✅
+
+Empty constructor → Spring Boot/JPA needs it for object creation
+Parameterized constructor → Easy object creation with values
+
+4. Getters & Setters ✅
+
+Small correction:
+
+Getters → Return/read values (e.g., getName() returns name)
+Setters → Set/initialize values (e.g., setName("John") sets name)
+
+5. Controller - Single Employee API ✅
+
+Return type: Employee (single object)
+Created Employee object
+Returned it → Spring converts to JSON
+
+6. Controller - All Employees API ✅
+
+Return type: List<Employee> (list of objects)
+Created ArrayList to hold multiple employees
+Added 4 employees
+Returned list → Spring converts to JSON array
+
 **Day 2 Status:** ✅ Complete
