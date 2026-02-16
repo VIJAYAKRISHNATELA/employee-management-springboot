@@ -1,35 +1,41 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Employee;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/employees")
 public class EmployeeController {
 
-    @GetMapping("/single")
+    @Autowired
+    private EmployeeService employeeService;
 
-    public Employee getSingleEmployee(){
-        Employee emp=new Employee(1L,"John Doe","john@example.com","IT");
-        return emp;
+    // Create/Save employee to database
+    @PostMapping
+    public Employee createEmployee(@RequestBody Employee employee) {
+        return employeeService.saveEmployee(employee);
     }
 
+    // Get all employees from database
+    @GetMapping
+    public List<Employee> getAllEmployees() {
+        return employeeService.getAllEmployees();
+    }
 
-@GetMapping("/all")
+    // Get single employee by ID
+    @GetMapping("/{id}")
+    public Employee getEmployeeById(@PathVariable Long id) {
+        return employeeService.getEmployeeById(id);
+    }
 
-public List<Employee> getAllEmployee(){
-        List<Employee> employees=new ArrayList<>();
-
-        employees.add(new Employee(1L,"John Doe","JohnDoe@example.com","IT"));
-        employees.add(new Employee(2L,"Jane smith","janesmith@example.com","HR"));
-        employees.add(new Employee(3L,"Mike Johnson","mike@example.com","Finance"));
-    employees.add(new Employee(4L,"Sarah ","sarah@example.com","Marketing"));
-
-    return employees;
-}
+    // Delete employee by ID
+    @DeleteMapping("/{id}")
+    public String deleteEmployee(@PathVariable Long id) {
+        employeeService.deleteEmployee(id);
+        return "Employee deleted successfully!";
+    }
 }
