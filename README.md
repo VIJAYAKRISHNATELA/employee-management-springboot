@@ -55,3 +55,75 @@ When trying to run the code, I got a **database configuration error** because I 
 
 **Author:** Vijayakrishna Tela  
 **Status:** Final Year Student | Learning Spring Boot | Seeking Entry-Level Opportunities
+
+
+### Day 2: Project Structure & Entity ✅
+
+**What I Built:**
+- ✅ Created package structure (controller, service, repository, entity)
+- ✅ Created Employee entity class with id, name, email, department
+- ✅ Created EmployeeController with REST endpoints
+- ✅ Returned dummy employee data (no database yet)
+
+**Key Learnings:**
+
+1. **Entity Class:**
+   - Represents a database table (will create actual table on Day 3)
+   - Private fields with getters/setters for encapsulation
+   - Need default constructor for Spring Boot/JPA
+
+2. **Return Types:**
+   - `List<Employee>` returns list of employee objects
+   - Spring Boot automatically converts objects to JSON
+   - No manual JSON writing needed!
+
+3. **REST API Structure:**
+   - `@RequestMapping("/api/employees")` at class level = base path
+   - `@GetMapping("/all")` = endpoint path
+   - Final URL: `/api/employees/all`
+
+**API Endpoints:**
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET    | `/hello` | Returns welcome message |
+| GET    | `/api/employees/single` | Returns single employee |
+| GET    | `/api/employees/all` | Returns list of employees |
+
+
+1. Spring Boot Architecture ✅
+
+Created proper package structure (entity, controller, service, repository)
+Understanding the layers of the application
+
+2. Entity Class ✅
+
+Marks a database table (will create actual table on Day 3)
+Properties = columns in the table
+Private fields = Encapsulation = Security ✅
+
+3. Constructors ✅
+
+Empty constructor → Spring Boot/JPA needs it for object creation
+Parameterized constructor → Easy object creation with values
+
+4. Getters & Setters ✅
+
+Small correction:
+
+Getters → Return/read values (e.g., getName() returns name)
+Setters → Set/initialize values (e.g., setName("John") sets name)
+
+5. Controller - Single Employee API ✅
+
+Return type: Employee (single object)
+Created Employee object
+Returned it → Spring converts to JSON
+
+6. Controller - All Employees API ✅
+
+Return type: List<Employee> (list of objects)
+Created ArrayList to hold multiple employees
+Added 4 employees
+Returned list → Spring converts to JSON array
+
+**Day 2 Status:** ✅ Complete
