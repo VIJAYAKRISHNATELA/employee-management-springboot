@@ -127,3 +127,48 @@ Added 4 employees
 Returned list → Spring converts to JSON array
 
 **Day 2 Status:** ✅ Complete
+
+
+### Day 3: MySQL + JPA Integration ✅
+
+**What I Built:**
+- ✅ Connected Spring Boot to MySQL database
+- ✅ Added JPA annotations (@Entity, @Id, @GeneratedValue, @Column)
+- ✅ Spring Boot auto-created database table from Entity class
+- ✅ Created Repository layer (EmployeeRepository extends JpaRepository)
+- ✅ Created Service layer (EmployeeService)
+- ✅ Implemented full CRUD operations (Create, Read, Delete)
+- ✅ Tested with Postman - saving real data to MySQL!
+
+**Key Learnings:**
+
+1. **JPA Annotations:**
+   - `@Entity` marks class as database table
+   - `@Id` marks primary key
+   - `@GeneratedValue` auto-increments ID
+   - `@Column` defines column properties (nullable, unique)
+
+2. **Spring Data JPA Magic:**
+   - Just extend `JpaRepository<Employee, Long>`
+   - Get 20+ methods FREE (save, findAll, findById, delete, etc.)
+   - No need to write SQL queries!
+
+3. **Dependency Injection:**
+   - `@Autowired` - Spring auto-injects dependencies
+   - Service uses Repository
+   - Controller uses Service
+
+4. **Application Architecture:**
+```
+   Controller → Service → Repository → Database
+```
+
+**API Endpoints (Now with Real Database!):**
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/employees` | Save new employee |
+| GET | `/api/employees` | Get all employees |
+| GET | `/api/employees/{id}` | Get employee by ID |
+| DELETE | `/api/employees/{id}` | Delete employee |
+
+**Day 3 Status:** ✅ Complete
