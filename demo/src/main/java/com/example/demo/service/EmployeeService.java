@@ -32,4 +32,19 @@ public class EmployeeService {
     public void deleteEmployee(Long id) {
         employeeRepository.deleteById(id);
     }
+
+    // Find employees by department
+    public List<Employee> getEmployeesByDepartment(String department) {
+        return employeeRepository.findByDepartment(department);
+    }
+
+    // Find employee by email
+    public Employee getEmployeeByEmail(String email) {
+        return employeeRepository.findByEmail(email);
+    }
+
+    // Search employees by name
+    public List<Employee> searchEmployeesByName(String keyword) {
+        return employeeRepository.findByNameContaining(keyword);
+    }
 }

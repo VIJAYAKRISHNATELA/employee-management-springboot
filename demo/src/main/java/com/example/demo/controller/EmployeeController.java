@@ -4,6 +4,8 @@ import com.example.demo.entity.Employee;
 import com.example.demo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -16,10 +18,10 @@ public class EmployeeController {
 
     // Create/Save employee to database
     @PostMapping
-    public Employee createEmployee(@RequestBody Employee employee) {
-        return employeeService.saveEmployee(employee);
+    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
+        Employee savedEmployee = employeeService.saveEmployee(employee);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedEmployee);
     }
-
     // Get all employees from database
     @GetMapping
     public List<Employee> getAllEmployees() {
@@ -34,8 +36,25 @@ public class EmployeeController {
 
     // Delete employee by ID
     @DeleteMapping("/{id}")
-    public String deleteEmployee(@PathVariable Long id) {
+    public ResponseEntity<String> deleteEmployee(@PathVariable Long id) {
         employeeService.deleteEmployee(id);
-        return "Employee deleted successfully!";
+        return ResponseEntity.status(HttpStatus.OK).body("Employee deleted successfully!");
+    }
+    // Get employees by department
+    @GetMapping("/department/{department}")
+    public List<Employee> getByDepartment(@PathVariable String department) {
+        return employeeService.getEmployeesByDepartment(department);
+    }
+
+    // Get employee by email
+    @GetMapping("/email/{email}")
+    public Employee getByEmail(@PathVariable String email) {
+        return employeeService.getEmployeeByEmail(email);
+    }
+
+    // Search employees by name
+    @GetMapping("/search/{keyword}")
+    public List<Employee> searchByName(@PathVariable String keyword) {
+        return employeeService.searchEmployeesByName(keyword);
     }
 }
