@@ -172,3 +172,50 @@ Returned list → Spring converts to JSON array
 | DELETE | `/api/employees/{id}` | Delete employee |
 
 **Day 3 Status:** ✅ Complete
+
+### Day 4: Repository + Save API Enhancement ✅
+
+**What I Built:**
+- ✅ Tested all existing CRUD APIs thoroughly in Postman
+- ✅ Added custom queries to EmployeeRepository
+- ✅ Added 3 new search endpoints
+- ✅ Improved API responses with ResponseEntity
+- ✅ Used proper HTTP status codes
+
+**Key Learnings:**
+
+**1. Spring Data JPA Custom Queries (Magic!):**
+- Just write method names - Spring generates SQL automatically!
+- `findByDepartment()` → `SELECT * FROM employees WHERE department = ?`
+- `findByEmail()` → `SELECT * FROM employees WHERE email = ?`
+- `findByNameContaining()` → `SELECT * FROM employees WHERE name LIKE '%?%'`
+- No SQL writing needed!
+
+**2. ResponseEntity:**
+- Controls HTTP response completely (status code + body)
+- POST should return `201 CREATED` (not default 200)
+- DELETE should return `200 OK`
+- Makes APIs more professional and RESTful
+
+**3. HTTP Status Codes:**
+| Code | Meaning | When to Use |
+|------|---------|-------------|
+| 200 | OK | Successful GET |
+| 201 | CREATED | Successful POST |
+| 204 | NO CONTENT | Successful DELETE |
+| 404 | NOT FOUND | Resource doesn't exist |
+| 400 | BAD REQUEST | Invalid data |
+| 500 | SERVER ERROR | Something broke |
+
+**API Endpoints (Complete List):**
+| Method | Endpoint | Description | Status |
+|--------|----------|-------------|--------|
+| POST | `/api/employees` | Save employee | 201 |
+| GET | `/api/employees` | Get all employees | 200 |
+| GET | `/api/employees/{id}` | Get by ID | 200 |
+| DELETE | `/api/employees/{id}` | Delete employee | 200 |
+| GET | `/api/employees/department/{dept}` | Get by department | 200 |
+| GET | `/api/employees/email/{email}` | Get by email | 200 |
+| GET | `/api/employees/search/{keyword}` | Search by name | 200 |
+
+**Day 4 Status:** ✅ Complete
