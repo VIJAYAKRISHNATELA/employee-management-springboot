@@ -219,3 +219,6 @@ Returned list → Spring converts to JSON array
 | GET | `/api/employees/search/{keyword}` | Search by name | 200 |
 
 **Day 4 Status:** ✅ Complete
+
+Just revised day 3 and day 4 
+
