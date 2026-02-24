@@ -23,7 +23,7 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    // Get employee by ID
+    // Get single employee by ID
     public Employee getEmployeeById(Long id) {
         return employeeRepository.findById(id).orElse(null);
     }
@@ -33,18 +33,21 @@ public class EmployeeService {
         employeeRepository.deleteById(id);
     }
 
-    // Find employees by department
-    public List<Employee> getEmployeesByDepartment(String department) {
-        return employeeRepository.findByDepartment(department);
-    }
+    // Update employee  ← NEW METHOD!
+    public Employee updateEmployee(Long id, Employee updatedEmployee) {
+        // Find existing employee
+        Employee existing = employeeRepository.findById(id).orElse(null);
 
-    // Find employee by email
-    public Employee getEmployeeByEmail(String email) {
-        return employeeRepository.findByEmail(email);
-    }
+        if (existing == null) {
+            throw new RuntimeException("Employee not found with id: " + id);
+        }
 
-    // Search employees by name
-    public List<Employee> searchEmployeesByName(String keyword) {
-        return employeeRepository.findByNameContaining(keyword);
+        // Update fields
+        existing.setName(updatedEmployee.getName());
+        existing.setEmail(updatedEmployee.getEmail());
+        existing.setDepartment(updatedEmployee.getDepartment());
+
+        // Save and return
+        return employeeRepository.save(existing);
     }
 }

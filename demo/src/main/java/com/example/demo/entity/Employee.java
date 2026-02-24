@@ -1,23 +1,25 @@
 package com.example.demo.entity;
 
+
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "employees")
-public class Employee {
+@Table(name="employees")
+public class Employee{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private Long id;
 
-    @Column(name = "email", nullable = false, unique = true)
-    private String email;
+@Column(name="name",nullable = false)
+private String name;
 
-    @Column(name = "department")
-    private String department;
+@Column(name="email",nullable = false,unique = true)
+private String email;
+
+@Column(name="department",nullable = false)
+private String department;
 
     // Constructor with all fields
     public Employee(Long id, String name, String email, String department) {
