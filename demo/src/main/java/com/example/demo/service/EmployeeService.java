@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Employee;
 import com.example.demo.repository.EmployeeRepository;
+import com.example.demo.exception.EmployeeNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,8 @@ public class EmployeeService {
 
     // Get single employee by ID
     public Employee getEmployeeById(Long id) {
-        return employeeRepository.findById(id).orElse(null);
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id: " + id));
     }
 
     // Delete employee by ID
@@ -33,21 +35,30 @@ public class EmployeeService {
         employeeRepository.deleteById(id);
     }
 
-    // Update employee  ← NEW METHOD!
+    // Update employee
     public Employee updateEmployee(Long id, Employee updatedEmployee) {
-        // Find existing employee
-        Employee existing = employeeRepository.findById(id).orElse(null);
+        Employee existing = employeeRepository.findById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id: " + id));
 
-        if (existing == null) {
-            throw new RuntimeException("Employee not found with id: " + id);
-        }
-
-        // Update fields
         existing.setName(updatedEmployee.getName());
         existing.setEmail(updatedEmployee.getEmail());
         existing.setDepartment(updatedEmployee.getDepartment());
 
-        // Save and return
         return employeeRepository.save(existing);
+    }
+
+    // Find employees by department
+    public List<Employee> getEmployeesByDepartment(String department) {
+        return employeeRepository.findByDepartment(department);
+    }
+
+    // Find employee by email
+    public Employee getEmployeeByEmail(String email) {
+        return employeeRepository.findByEmail(email);
+    }
+
+    // Search employees by name
+    public List<Employee> searchEmployeesByName(String keyword) {
+        return employeeRepository.findByNameContaining(keyword);
     }
 }
