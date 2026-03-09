@@ -1,7 +1,8 @@
 package com.example.demo.entity;
 
-
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="employees")
@@ -12,12 +13,16 @@ public class Employee{
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;
 
+@NotBlank(message="Name cannot be empty")
 @Column(name="name",nullable = false,length = 100)
 private String name;
 
+@Email(message = "Email must be valid")
+@NotBlank(message="Email cannot be empty")
 @Column(name="email",nullable = false,unique = true)
 private String email;
 
+@NotBlank(message = "Department cannot be empty")
 @Column(name="department",nullable = false)
 private String department;
 
@@ -47,22 +52,27 @@ private String department;
     }
 
     public void setName(String name) {
+
         this.name = name;
     }
 
     public String getEmail() {
+
         return email;
     }
 
     public void setEmail(String email) {
+
         this.email = email;
     }
 
     public String getDepartment() {
+
         return department;
     }
 
     public void setDepartment(String department) {
+
         this.department = department;
     }
 }
