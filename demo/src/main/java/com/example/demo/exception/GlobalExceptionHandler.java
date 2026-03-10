@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(EmployeeNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleEmployeeNotFound(EmployeeNotFoundException ex) {
+    public ResponseEntity<ErrorResponse> handleEmployeeNotFound(EmployeeNotFoundException ex){
 
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now().toString(),
