@@ -1,8 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.EmployeeDto;
 import com.example.demo.entity.Employee;
-import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.exception.EmployeeNotFoundException;
+import com.example.demo.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +16,9 @@ public class EmployeeService {
     private EmployeeRepository employeeRepository;
 
     // Save employee to database
-    public Employee saveEmployee(Employee employee) {
-        return employeeRepository.save(employee);
-    }
+//    public Employee saveEmployee(Employee employee) {
+//        return employeeRepository.save(employee);
+//    }
 
     // Get all employees from database
     public List<Employee> getAllEmployees() {
@@ -60,5 +61,14 @@ public class EmployeeService {
     // Search employees by name
     public List<Employee> searchEmployeesByName(String keyword) {
         return employeeRepository.findByNameContaining(keyword);
+    }
+
+    public Employee saveEmployee(EmployeeDto dto){
+        Employee employee=new Employee();
+        employee.setName(dto.getName());
+        employee.setDepartment(dto.getDepartment());
+        employee.setEmail(dto.getEmail());
+
+        return employeeRepository.save(employee);
     }
 }

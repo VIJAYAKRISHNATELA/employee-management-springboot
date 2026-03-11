@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.EmployeeDto;
 import com.example.demo.entity.Employee;
 import com.example.demo.service.EmployeeService;
 import jakarta.validation.Valid;
@@ -18,8 +19,8 @@ public class EmployeeController {
 
     // Create/Save employee to database
     @PostMapping
-    public Employee createEmployee(@Valid @RequestBody Employee employee) {
-        return employeeService.saveEmployee(employee);
+    public Employee createEmployee(@Valid @RequestBody EmployeeDto dto) {
+        return employeeService.saveEmployee(dto);
     }
 
     // Get all employees from database
