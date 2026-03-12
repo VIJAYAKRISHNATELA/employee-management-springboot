@@ -1,4 +1,7 @@
 package com.example.demo.controller;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 
 import com.example.demo.dto.EmployeeDto;
 import com.example.demo.entity.Employee;
@@ -49,6 +52,11 @@ public class EmployeeController {
             @RequestBody Employee employee) {
         Employee updated = employeeService.updateEmployee(id, employee);
         return ResponseEntity.ok(updated);
+    }
+
+    @GetMapping("/paged")
+    public Page<Employee> getEmployees(Pageable pageable){
+        return employeeService.getEmployees(pageable);
     }
 
 }
