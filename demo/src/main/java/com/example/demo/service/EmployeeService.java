@@ -8,6 +8,7 @@ import com.example.demo.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -97,5 +98,18 @@ private static final Logger log=LoggerFactory.getLogger(EmployeeService.class);
    public Page<Employee> getEmployees(Pageable pageable){
         return employeeRepository.findAll(pageable);
    }
+
+   public List<Employee> getEmployeesSortedBy(String field){
+        return employeeRepository.findAll(Sort.by(Sort.Direction.ASC,field));
+   }
+
+    public List<Employee> getEmployeesSorted(String field, String direction) {
+
+        if(direction.equalsIgnoreCase("desc")){
+            return employeeRepository.findAll(Sort.by(Sort.Direction.DESC, field));
+        }
+
+        return employeeRepository.findAll(Sort.by(Sort.Direction.ASC, field));
+    }
 
 }

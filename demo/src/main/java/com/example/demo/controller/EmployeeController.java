@@ -59,4 +59,17 @@ public class EmployeeController {
         return employeeService.getEmployees(pageable);
     }
 
+    @GetMapping("/sort/{field}")
+    public List<Employee> getEmployeesSorted(@PathVariable String field){
+        return employeeService.getEmployeesSortedBy(field);
+    }
+    @GetMapping("/sort")
+    public List<Employee> getSortedEmployees(
+            @RequestParam String field,
+            @RequestParam(defaultValue = "asc") String direction) {
+
+        return employeeService.getEmployeesSorted(field, direction);
+    }
+
+
 }
