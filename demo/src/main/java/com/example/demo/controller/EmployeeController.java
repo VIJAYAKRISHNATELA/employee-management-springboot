@@ -71,5 +71,20 @@ public class EmployeeController {
         return employeeService.getEmployeesSorted(field, direction);
     }
 
+    @GetMapping("/department/{dept}")
+    public List<Employee> getByDepartment(@PathVariable String dept){
+        return employeeService.getEmployeesByDepartment(dept);
+    }
+
+    @GetMapping("/email")
+        public Employee getByEmail(@RequestParam String email){
+            return employeeService.getEmployeeByEmail(email);
+        }
+
+     @GetMapping("/search")
+    public List<Employee> search(@RequestParam String keyword){
+        return employeeService.searchEmployeesByName(keyword);
+     }
+
 
 }
