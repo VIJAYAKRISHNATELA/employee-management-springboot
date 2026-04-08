@@ -18,13 +18,7 @@ Java 17 · Spring Boot 3.3 · Spring Security · JWT · MySQL · JUnit 5 · Mock
 - Full unit and integration test coverage (Mockito + MockMvc)
 - Dockerised — one command to run the entire stack
 
-## Run with Docker (recommended)
-```bash
-cp .env.example .env          # fill in DB_PASSWORD and JWT_SECRET
-docker compose up --build
-# API:   http://localhost:8080
-# Docs:  http://localhost:8080/swagger-ui.html
-```
+
 
 ## Auth flow
 ```
