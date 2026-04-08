@@ -1,88 +1,53 @@
-# Employee Management System (Spring Boot + JWT)
+# Employee Management System
 
-## 🚀 Overview
+Production-grade REST API built with Spring Boot, featuring JWT authentication,
+role-based access control, audit tracking, and full test coverage.
 
-A secure backend application built using Spring Boot that provides employee management APIs with JWT-based authentication and role-based authorization.
+## Live demo
+https://your-deployed-url/swagger-ui.html   ← add this after deploying
 
----
+## Tech stack
+Java 17 · Spring Boot 3.3 · Spring Security · JWT · MySQL · JUnit 5 · Mockito · Docker · Swagger/OpenAPI
 
-## 🔐 Features
+## Key features
+- JWT authentication with role-based access control (ADMIN creates/updates/deletes; USER reads)
+- BCrypt password hashing
+- Soft delete with `isActive` flag — records are never lost
+- Audit timestamps (`createdAt`, `updatedAt`) on every employee record
+- Pagination, sorting, keyword search, department filter
+- Global exception handling with structured JSON error responses
+- Interactive API docs at `/swagger-ui.html`
+- Full unit and integration test coverage (Mockito + MockMvc)
+- Dockerised — one command to run the entire stack
 
-* User Registration & Login
-* JWT Authentication (Stateless)
-* Password Encryption using BCrypt
-* Role-based Authorization (ADMIN / USER)
-* CRUD Operations on Employees
-* Global Exception Handling
-* DTO Pattern Implementation
+## Run with Docker (recommended)
+```bash
+cp .env.example .env          # fill in DB_PASSWORD and JWT_SECRET
+docker compose up --build
+# API:   http://localhost:8080
+# Docs:  http://localhost:8080/swagger-ui.html
+```
 
----
+## Auth flow
+```
+POST /auth/register  {"username":"admin","password":"pass","role":"ADMIN"}
+POST /auth/login     {"username":"admin","password":"pass"}
+→ copy the JWT token from the response
+All /api/employees/* endpoints need:  Authorization: Bearer <token>
+```
 
-## 🛠️ Tech Stack
+## API endpoints
+| Method | Endpoint | Access |
+|--------|----------|--------|
+| GET | /api/employees | USER, ADMIN |
+| GET | /api/employees/{id} | USER, ADMIN |
+| GET | /api/employees/search?keyword= | USER, ADMIN |
+| GET | /api/employees/paged?page=0&size=10 | USER, ADMIN |
+| POST | /api/employees | ADMIN only |
+| PUT | /api/employees/{id} | ADMIN only |
+| DELETE | /api/employees/{id} | ADMIN only (soft delete) |
 
-* Java
-* Spring Boot
-* Spring Security
-* Spring Data JPA
-* MySQL
-* JWT (io.jsonwebtoken)
-
----
-
-## 🔑 Authentication Flow
-
-1. User registers with username & password
-2. Password is encrypted using BCrypt
-3. User logs in → receives JWT token
-4. Token is sent in Authorization header
-5. Server validates token and allows access
-
----
-
-## 📌 API Endpoints
-
-### 🔐 Auth APIs
-
-* POST /auth/register → Register user
-* POST /auth/login → Get JWT token
-
-### 👨‍💼 Employee APIs
-
-* GET /api/employees → Get all employees
-* GET /api/employees/{id} → Get employee by ID
-* POST /api/employees → Create employee
-* PUT /api/employees/{id} → Update employee
-* DELETE /api/employees/{id} → Delete employee
-
----
-
-## 🔒 Security
-
-* Stateless session (JWT)
-* No default Spring Security login
-* Role-based access control
-
----
-
-## 🧠 What I Learned
-
-* Implementing JWT authentication
-* Securing APIs using Spring Security
-* Password hashing using BCrypt
-* Designing layered architecture (Controller-Service-Repository)
-* Handling exceptions globally
-
----
-
-## ▶️ How to Run
-
-1. Clone the repository
-2. Configure MySQL in application.properties
-3. Run the application
-4. Use Postman to test APIs
-
----
-
-## 📬 Author
-
-Vijay
+## Run tests
+```bash
+cd demo && ./mvnw test
+```
