@@ -3,8 +3,6 @@
 Production-grade REST API built with Spring Boot, featuring JWT authentication,
 role-based access control, audit tracking, and full test coverage.
 
-## Live demo
-https://your-deployed-url/swagger-ui.html   ← add this after deploying
 
 ## Tech stack
 Java 17 · Spring Boot 3.3 · Spring Security · JWT · MySQL · JUnit 5 · Mockito · Docker · Swagger/OpenAPI
