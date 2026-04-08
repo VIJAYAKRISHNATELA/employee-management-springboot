@@ -8,7 +8,7 @@ Java 17 · Spring Boot 3.3 · Spring Security · JWT · MySQL · JUnit 5 · Mock
 
 ## Features
 - **JWT authentication** — stateless, token-based, role embedded in claim
-- **Role-based access control** — ADMIN can create/update/delete; USER can only read
+- **Role-based access control** — ADMIN creates/updates/deletes; USER reads only
 - **BCrypt** password hashing on all stored credentials
 - **Soft delete** — employees marked `isActive=false`, never permanently removed
 - **Audit timestamps** — `createdAt` and `updatedAt` auto-managed on every record
@@ -16,7 +16,7 @@ Java 17 · Spring Boot 3.3 · Spring Security · JWT · MySQL · JUnit 5 · Mock
 - **Global exception handling** — structured JSON errors with correct HTTP status codes
 - **Swagger/OpenAPI** — interactive API docs at `/swagger-ui.html`
 - **Full test coverage** — Mockito unit tests + MockMvc integration tests
-- **Dockerised** — one command runs the entire stack
+- **Dockerised** — one command runs the full stack
 
 ## Run with Docker
 ```bash
@@ -28,8 +28,8 @@ docker compose up --build
 
 ## Run locally (without Docker)
 ```bash
-# 1. Create a MySQL database named: employee_db
-# 2. Set environment variables DB_URL, DB_USERNAME, DB_PASSWORD, JWT_SECRET
+# 1. Create a MySQL database named employee_db
+# 2. Set env vars: DB_URL, DB_USERNAME, DB_PASSWORD, JWT_SECRET
 cd demo && ./mvnw spring-boot:run
 ```
 
@@ -37,10 +37,9 @@ cd demo && ./mvnw spring-boot:run
 ```
 POST /auth/register   {"username":"admin","password":"pass","role":"ADMIN"}
 POST /auth/login      {"username":"admin","password":"pass"}
-→ copy the JWT from the response body
+→ copy the JWT from the response
 
-All /api/employees/* requests require:
-Authorization: Bearer <your-token>
+All /api/employees/* require:   Authorization: Bearer <token>
 ```
 
 ## API reference
@@ -64,4 +63,4 @@ cd demo && ./mvnw test
 ```
 
 ## Author
-Vijay — [GitHub](https://github.com/VIJAYAKRISHNATELA/employee-management-springboot)
+Vijay Krishna Tela — [GitHub](https://github.com/VIJAYAKRISHNATELA) · [LinkedIn](https://www.linkedin.com/in/vijayakrishna-tela)
