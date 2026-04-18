@@ -17,4 +17,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     // Find employees whose name contains a keyword
     List<Employee> findByNameContaining(String keyword);
+    List<Employee> findByIsActiveTrue();
+    List<Employee> findByDepartmentAndIsActiveTrue(String department);
 }

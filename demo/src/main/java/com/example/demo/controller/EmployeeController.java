@@ -1,56 +1,60 @@
 package com.example.demo.controller;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 
 import com.example.demo.dto.EmployeeDto;
 import com.example.demo.entity.Employee;
 import com.example.demo.service.EmployeeService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Tag(name = "Employees", description = "Employee management APIs")
 @RestController
 @RequestMapping("/api/employees")
 public class EmployeeController {
 
-    @Autowired
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
-    // Create/Save employee to database
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
+
+
+
     @PostMapping
+    @Operation(summary = "Create a new employee (ADMIN only)")
     public Employee createEmployee(@Valid @RequestBody EmployeeDto dto) {
         return employeeService.saveEmployee(dto);
     }
 
-    // Get all employees from database
+    @Operation(summary = "Get all active employees")
     @GetMapping
     public List<Employee> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
 
-    // Get single employee by ID
     @GetMapping("/{id}")
     public Employee getEmployeeById(@PathVariable Long id) {
         return employeeService.getEmployeeById(id);
     }
 
-    // Delete employee by ID
     @DeleteMapping("/{id}")
     public String deleteEmployee(@PathVariable Long id) {
         employeeService.deleteEmployee(id);
         return "Employee deleted successfully!";
     }
 
-    // Update employee
+
+
     @PutMapping("/{id}")
     public ResponseEntity<Employee> updateEmployee(
             @PathVariable Long id,
-            @RequestBody Employee employee) {
-        Employee updated = employeeService.updateEmployee(id, employee);
+            @Valid @RequestBody EmployeeDto dto) {   // ← was Employee
+        Employee updated = employeeService.updateEmployee(id, dto);
         return ResponseEntity.ok(updated);
     }
 

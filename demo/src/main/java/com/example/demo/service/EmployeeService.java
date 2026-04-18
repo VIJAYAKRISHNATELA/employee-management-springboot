@@ -1,38 +1,31 @@
 package com.example.demo.service;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import com.example.demo.dto.EmployeeDto;
 import com.example.demo.entity.Employee;
 import com.example.demo.exception.EmployeeNotFoundException;
 import com.example.demo.repository.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
-
 @Service
 public class EmployeeService {
 
-    //Logger
-private static final Logger log=LoggerFactory.getLogger(EmployeeService.class);
+    private static final Logger log = LoggerFactory.getLogger(EmployeeService.class);
+    private final EmployeeRepository employeeRepository;
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
-
-    // Save employee to database
-//    public Employee saveEmployee(Employee employee) {
-//        return employeeRepository.save(employee);
-//    }
-
-    // Get all employees from database
-    public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
+    public EmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
     }
 
-    // Get single employee by ID
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findByIsActiveTrue();
+    }
     public Employee getEmployeeById(Long id) {
         log.info("Fetching employee with id {}", id);
 
@@ -43,37 +36,34 @@ private static final Logger log=LoggerFactory.getLogger(EmployeeService.class);
                 });
     }
 
-    // Delete employee by ID
     public void deleteEmployee(Long id) {
-        log.info("Deleting employee with id {}",id);
-        employeeRepository.deleteById(id);
-        log.info("Employee deleted successfullly eith id{}",id);
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id: " + id));
+        employee.setActive(false);
+        employeeRepository.save(employee);
+        log.info("Employee soft-deleted with id {}", id);
     }
 
-    // Update employee
-    public Employee updateEmployee(Long id, Employee updatedEmployee) {
+    public Employee updateEmployee(Long id, EmployeeDto dto) {  // ← was Employee
         Employee existing = employeeRepository.findById(id)
                 .orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id: " + id));
-
-        existing.setName(updatedEmployee.getName());
-        existing.setEmail(updatedEmployee.getEmail());
-        existing.setDepartment(updatedEmployee.getDepartment());
-
+        existing.setName(dto.getName());
+        existing.setEmail(dto.getEmail());
+        existing.setDepartment(dto.getDepartment());
+        existing.setSalary(dto.getSalary());
+        existing.setJoinDate(dto.getJoinDate());
         return employeeRepository.save(existing);
     }
 
-    // Find employees by department
     public List<Employee> getEmployeesByDepartment(String department) {
         return employeeRepository.findByDepartment(department);
     }
 
-    // Find employee by email
     public Employee getEmployeeByEmail(String email) {
 
         return employeeRepository.findByEmail(email);
     }
 
-    // Search employees by name
     public List<Employee> searchEmployeesByName(String keyword) {
         return employeeRepository.findByNameContaining(keyword);
     }
@@ -86,6 +76,9 @@ private static final Logger log=LoggerFactory.getLogger(EmployeeService.class);
         employee.setName(dto.getName());
         employee.setDepartment(dto.getDepartment());
         employee.setEmail(dto.getEmail());
+        employee.setSalary(dto.getSalary());
+        employee.setJoinDate(dto.getJoinDate() != null ? dto.getJoinDate() : LocalDate.now());
+
 
         Employee savedEmployee = employeeRepository.save(employee);
 
